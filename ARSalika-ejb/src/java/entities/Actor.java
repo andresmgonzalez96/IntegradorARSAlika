@@ -1,0 +1,125 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package entities;
+
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ *
+ * @author andresgonzalez
+ */
+@Entity
+@Table(name = "actor")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Actor.findAll", query = "SELECT a FROM Actor a")
+    , @NamedQuery(name = "Actor.findByActorId", query = "SELECT a FROM Actor a WHERE a.actorId = :actorId")
+    , @NamedQuery(name = "Actor.findByFirstName", query = "SELECT a FROM Actor a WHERE a.firstName = :firstName")
+    , @NamedQuery(name = "Actor.findByLastName", query = "SELECT a FROM Actor a WHERE a.lastName = :lastName")
+    , @NamedQuery(name = "Actor.findByLastUpdate", query = "SELECT a FROM Actor a WHERE a.lastUpdate = :lastUpdate")})
+public class Actor implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "actor_id")
+    private Integer actorId;
+    @Size(max = 50)
+    @Column(name = "first_name")
+    private String firstName;
+    @Size(max = 50)
+    @Column(name = "last_name")
+    private String lastName;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "last_update")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdate;
+
+    public Actor() {
+    }
+
+    public Actor(Integer actorId) {
+        this.actorId = actorId;
+    }
+
+    public Actor(Integer actorId, Date lastUpdate) {
+        this.actorId = actorId;
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Integer getActorId() {
+        return actorId;
+    }
+
+    public void setActorId(Integer actorId) {
+        this.actorId = actorId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (actorId != null ? actorId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Actor)) {
+            return false;
+        }
+        Actor other = (Actor) object;
+        if ((this.actorId == null && other.actorId != null) || (this.actorId != null && !this.actorId.equals(other.actorId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entities.Actor[ actorId=" + actorId + " ]";
+    }
+    
+}
